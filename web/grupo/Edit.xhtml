@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="GrupoEditDlg" widgetVar="GrupoEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditGrupoTitle}" closeOnEscape="true">
+
+            <h:form id="GrupoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{grupoController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditGrupoLabel_idgrupo}" for="idgrupo" />
+                        <h:outputText id="idgrupo" value="#{grupoController.selected.idgrupo}" />
+
+                        <p:outputLabel value="#{myBundle.EditGrupoLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{grupoController.selected.nombre}" title="#{myBundle.EditGrupoTitle_nombre}" required="true" requiredMessage="#{myBundle.EditGrupoRequiredMessage_nombre}" size="100" maxlength="100"/>
+
+                        <p:outputLabel value="#{myBundle.EditGrupoLabel_idcampeonato}" for="idcampeonato" />
+                        <p:selectOneMenu id="idcampeonato" value="#{grupoController.selected.idcampeonato}" required="true" requiredMessage="#{myBundle.EditGrupoRequiredMessage_idcampeonato}" converter="campeonatoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{campeonatoController.items}"
+                                           var="idcampeonatoItem"
+                                           itemValue="#{idcampeonatoItem}"
+                                           itemLabel="#{idcampeonatoItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{grupoController.save}" value="#{myBundle.Save}" update="display,:GrupoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('GrupoEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('GrupoEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

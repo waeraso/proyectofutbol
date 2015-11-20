@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="EquipoListForm">
+
+        <p:panel header="#{myBundle.ListEquipoTitle}">
+            <p:contextMenu id="EquipoDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('EquipoListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('EquipoListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('EquipoListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('EquipoListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.EquipoMenuItem_equipoJugadorCollection}" icon="ui-icon-search"  action="#{equipoController.navigateEquipoJugadorCollection}" disabled="#{empty equipoController.selected.equipoJugadorCollection}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.EquipoMenuItem_idgrupo}" icon="ui-icon-search"  actionListener="#{equipoController.prepareIdgrupo}" update=":GrupoViewForm" oncomplete="PF('GrupoViewDialog').show()" disabled="#{empty equipoController.selected.idgrupo}"/>  
+                <p:menuitem value="#{myBundle.EquipoMenuItem_partidoCollection}" icon="ui-icon-search"  action="#{equipoController.navigatePartidoCollection}" disabled="#{empty equipoController.selected.partidoCollection}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.EquipoMenuItem_partidoCollection1}" icon="ui-icon-search"  action="#{equipoController.navigatePartidoCollection1}" disabled="#{empty equipoController.selected.partidoCollection1}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{equipoController.items}"
+                         var="item"
+                         rowKey="#{item.idequipo}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{equipoController.selected}">
+
+                <p:ajax event="rowSelect"   update=":EquipoListForm:createButton :EquipoListForm:viewButton :EquipoListForm:editButton :EquipoListForm:deleteButton :EquipoListForm:EquipoDataTableContextMenu" listener="#{equipoController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":EquipoListForm:createButton :EquipoListForm:viewButton :EquipoListForm:editButton :EquipoListForm:deleteButton :EquipoListForm:EquipoDataTableContextMenu" listener="#{equipoController.resetParents}"/>
+                <p:ajax event="contextMenu" update=":EquipoListForm:createButton :EquipoListForm:viewButton :EquipoListForm:editButton :EquipoListForm:deleteButton" listener="#{equipoController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('EquipoListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idequipo}" filterBy="#{item.idequipo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEquipoTitle_idequipo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idequipo}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEquipoTitle_nombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idgrupo.idgrupo}" filterBy="#{item.idgrupo.idgrupo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEquipoTitle_idgrupo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idgrupo.nombre}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{equipoController.prepareCreate}" update=":EquipoCreateForm" oncomplete="PF('EquipoCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":EquipoViewForm" oncomplete="PF('EquipoViewDialog').show()" disabled="#{empty equipoController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":EquipoEditForm" oncomplete="PF('EquipoEditDialog').show()" disabled="#{empty equipoController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{equipoController.delete}" update=":growl,datalist" disabled="#{empty equipoController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

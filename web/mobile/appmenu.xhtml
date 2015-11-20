@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <h:form id="menuForm">
+        <p:menu>
+            <p:submenu label="#{myBundle.Maintenance}">
+                <p:menuitem value="#{myBundle.ArbritroHeading}..." outcome="/mobile/arbritro/index" />
+                <p:menuitem value="#{myBundle.CampeonatoHeading}..." outcome="/mobile/campeonato/index" />
+                <p:menuitem value="#{myBundle.CanchaHeading}..." outcome="/mobile/cancha/index" />
+                <p:menuitem value="#{myBundle.EquipoHeading}..." outcome="/mobile/equipo/index" />
+                <p:menuitem value="#{myBundle.EquipoJugadorHeading}..." outcome="/mobile/equipoJugador/index" />
+                <p:menuitem value="#{myBundle.GolHeading}..." outcome="/mobile/gol/index" />
+                <p:menuitem value="#{myBundle.GrupoHeading}..." outcome="/mobile/grupo/index" />
+                <p:menuitem value="#{myBundle.JugadorHeading}..." outcome="/mobile/jugador/index" />
+                <p:menuitem value="#{myBundle.PartidoHeading}..." outcome="/mobile/partido/index" />
+                <p:menuitem value="#{myBundle.SancionHeading}..." outcome="/mobile/sancion/index" />
+                <p:menuitem value="#{myBundle.TipoCampeonatoHeading}..." outcome="/mobile/tipoCampeonato/index" />
+                <p:menuitem value="#{myBundle.TipoSancionHeading}..." outcome="/mobile/tipoSancion/index" />
+            </p:submenu>
+            <p:menuitem value="#{myBundle.FullApp}" outcome="/index" icon="ui-icon-home"/>
+        </p:menu>
+    </h:form>
+</ui:composition>

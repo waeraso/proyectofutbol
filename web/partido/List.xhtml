@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="PartidoListForm">
+
+        <p:panel header="#{myBundle.ListPartidoTitle}">
+            <p:contextMenu id="PartidoDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('PartidoListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('PartidoListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('PartidoListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('PartidoListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.PartidoMenuItem_golCollection}" icon="ui-icon-search"  action="#{partidoController.navigateGolCollection}" disabled="#{empty partidoController.selected.golCollection}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.PartidoMenuItem_sancionCollection}" icon="ui-icon-search"  action="#{partidoController.navigateSancionCollection}" disabled="#{empty partidoController.selected.sancionCollection}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.PartidoMenuItem_arbritroCentral}" icon="ui-icon-search"  actionListener="#{partidoController.prepareArbritroCentral}" update=":ArbritroViewForm" oncomplete="PF('ArbritroViewDialog').show()" disabled="#{empty partidoController.selected.arbritroCentral}"/>  
+                <p:menuitem value="#{myBundle.PartidoMenuItem_idarbritro1}" icon="ui-icon-search"  actionListener="#{partidoController.prepareIdarbritro1}" update=":ArbritroViewForm" oncomplete="PF('ArbritroViewDialog').show()" disabled="#{empty partidoController.selected.idarbritro1}"/>  
+                <p:menuitem value="#{myBundle.PartidoMenuItem_idarbritro2}" icon="ui-icon-search"  actionListener="#{partidoController.prepareIdarbritro2}" update=":ArbritroViewForm" oncomplete="PF('ArbritroViewDialog').show()" disabled="#{empty partidoController.selected.idarbritro2}"/>  
+                <p:menuitem value="#{myBundle.PartidoMenuItem_idarbritro3}" icon="ui-icon-search"  actionListener="#{partidoController.prepareIdarbritro3}" update=":ArbritroViewForm" oncomplete="PF('ArbritroViewDialog').show()" disabled="#{empty partidoController.selected.idarbritro3}"/>  
+                <p:menuitem value="#{myBundle.PartidoMenuItem_idcancha}" icon="ui-icon-search"  actionListener="#{partidoController.prepareIdcancha}" update=":CanchaViewForm" oncomplete="PF('CanchaViewDialog').show()" disabled="#{empty partidoController.selected.idcancha}"/>  
+                <p:menuitem value="#{myBundle.PartidoMenuItem_equipoVisitante}" icon="ui-icon-search"  actionListener="#{partidoController.prepareEquipoVisitante}" update=":EquipoViewForm" oncomplete="PF('EquipoViewDialog').show()" disabled="#{empty partidoController.selected.equipoVisitante}"/>  
+                <p:menuitem value="#{myBundle.PartidoMenuItem_equipoLocal}" icon="ui-icon-search"  actionListener="#{partidoController.prepareEquipoLocal}" update=":EquipoViewForm" oncomplete="PF('EquipoViewDialog').show()" disabled="#{empty partidoController.selected.equipoLocal}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{partidoController.items}"
+                         var="item"
+                         rowKey="#{item.idpartido}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{partidoController.selected}">
+
+                <p:ajax event="rowSelect"   update=":PartidoListForm:createButton :PartidoListForm:viewButton :PartidoListForm:editButton :PartidoListForm:deleteButton :PartidoListForm:PartidoDataTableContextMenu" listener="#{partidoController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":PartidoListForm:createButton :PartidoListForm:viewButton :PartidoListForm:editButton :PartidoListForm:deleteButton :PartidoListForm:PartidoDataTableContextMenu" listener="#{partidoController.resetParents}"/>
+                <p:ajax event="contextMenu" update=":PartidoListForm:createButton :PartidoListForm:viewButton :PartidoListForm:editButton :PartidoListForm:deleteButton" listener="#{partidoController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('PartidoListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idpartido}" filterBy="#{item.idpartido}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPartidoTitle_idpartido}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idpartido}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaHora}" filterBy="#{item.fechaHora}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPartidoTitle_fechaHora}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaHora}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.arbritroCentral.idarbritro}" filterBy="#{item.arbritroCentral.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPartidoTitle_arbritroCentral}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.arbritroCentral.nombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idarbritro1.idarbritro}" filterBy="#{item.idarbritro1.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPartidoTitle_idarbritro1}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idarbritro1.nombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idarbritro2.idarbritro}" filterBy="#{item.idarbritro2.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPartidoTitle_idarbritro2}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idarbritro2.nombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idarbritro3.idarbritro}" filterBy="#{item.idarbritro3.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPartidoTitle_idarbritro3}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idarbritro3.nombre}"/>
+                </p:column>
+
+                
+                                    <p:column sortBy="#{item.idcancha.idcancha}" filterBy="#{item.idcancha.nombre}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListPartidoTitle_idcancha}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idcancha.nombre}"/>
+                                    </p:column>
+                
+                
+                                    <p:column sortBy="#{item.equipoVisitante.idequipo}" filterBy="#{item.equipoVisitante.nombre}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListPartidoTitle_equipoVisitante}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.equipoVisitante.nombre}"/>
+                                    </p:column>
+                
+                
+                                    <p:column sortBy="#{item.equipoLocal.idequipo}" filterBy="#{item.equipoLocal.nombre}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListPartidoTitle_equipoLocal}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.equipoLocal.nombre}"/>
+                                    </p:column>
+                
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{partidoController.prepareCreate}" update=":PartidoCreateForm" oncomplete="PF('PartidoCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":PartidoViewForm" oncomplete="PF('PartidoViewDialog').show()" disabled="#{empty partidoController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":PartidoEditForm" oncomplete="PF('PartidoEditDialog').show()" disabled="#{empty partidoController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{partidoController.delete}" update=":growl,datalist" disabled="#{empty partidoController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

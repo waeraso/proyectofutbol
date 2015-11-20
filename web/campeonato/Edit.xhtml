@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="CampeonatoEditDlg" widgetVar="CampeonatoEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditCampeonatoTitle}" closeOnEscape="true">
+
+            <h:form id="CampeonatoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{campeonatoController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditCampeonatoLabel_idcampeonato}" for="idcampeonato" />
+                        <h:outputText id="idcampeonato" value="#{campeonatoController.selected.idcampeonato}" />
+
+                        <p:outputLabel value="#{myBundle.EditCampeonatoLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{campeonatoController.selected.descripcion}" title="#{myBundle.EditCampeonatoTitle_descripcion}" required="true" requiredMessage="#{myBundle.EditCampeonatoRequiredMessage_descripcion}" size="100" maxlength="100"/>
+
+                        <p:outputLabel value="#{myBundle.EditCampeonatoLabel_fechaInicio}" for="fechaInicio" />
+                        <p:calendar id="fechaInicio" pattern="MM/dd/yyyy" value="#{campeonatoController.selected.fechaInicio}" title="#{myBundle.EditCampeonatoTitle_fechaInicio}" required="true" requiredMessage="#{myBundle.EditCampeonatoRequiredMessage_fechaInicio}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditCampeonatoLabel_fechaFin}" for="fechaFin" />
+                        <p:calendar id="fechaFin" pattern="MM/dd/yyyy" value="#{campeonatoController.selected.fechaFin}" title="#{myBundle.EditCampeonatoTitle_fechaFin}" required="true" requiredMessage="#{myBundle.EditCampeonatoRequiredMessage_fechaFin}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditCampeonatoLabel_tipoCampeonato}" for="tipoCampeonato" />
+                        <p:selectOneMenu id="tipoCampeonato" value="#{campeonatoController.selected.tipoCampeonato}" required="true" requiredMessage="#{myBundle.EditCampeonatoRequiredMessage_tipoCampeonato}" converter="tipoCampeonatoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoCampeonatoController.items}"
+                                           var="tipoCampeonatoItem"
+                                           itemValue="#{tipoCampeonatoItem}"
+                                           itemLabel="#{tipoCampeonatoItem.idtipoCampeonato.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{campeonatoController.save}" value="#{myBundle.Save}" update="display,:CampeonatoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CampeonatoEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('CampeonatoEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

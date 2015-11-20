@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="EquipoJugadorListForm">
+
+        <p:panel header="#{myBundle.ListEquipoJugadorTitle}">
+            <p:contextMenu id="EquipoJugadorDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('EquipoJugadorListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('EquipoJugadorListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('EquipoJugadorListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('EquipoJugadorListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.EquipoJugadorMenuItem_idequipo}" icon="ui-icon-search"  actionListener="#{equipoJugadorController.prepareIdequipo}" update=":EquipoViewForm" oncomplete="PF('EquipoViewDialog').show()" disabled="#{empty equipoJugadorController.selected.idequipo}"/>  
+                <p:menuitem value="#{myBundle.EquipoJugadorMenuItem_idjugador}" icon="ui-icon-search"  actionListener="#{equipoJugadorController.prepareIdjugador}" update=":JugadorViewForm" oncomplete="PF('JugadorViewDialog').show()" disabled="#{empty equipoJugadorController.selected.idjugador}"/>  
+                <p:menuitem value="#{myBundle.EquipoJugadorMenuItem_golCollection}" icon="ui-icon-search"  action="#{equipoJugadorController.navigateGolCollection}" disabled="#{empty equipoJugadorController.selected.golCollection}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.EquipoJugadorMenuItem_sancionCollection}" icon="ui-icon-search"  action="#{equipoJugadorController.navigateSancionCollection}" disabled="#{empty equipoJugadorController.selected.sancionCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{equipoJugadorController.items}"
+                         var="item"
+                         rowKey="#{item.idEquipoJugador}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{equipoJugadorController.selected}">
+
+                <p:ajax event="rowSelect"   update=":EquipoJugadorListForm:createButton :EquipoJugadorListForm:viewButton :EquipoJugadorListForm:editButton :EquipoJugadorListForm:deleteButton :EquipoJugadorListForm:EquipoJugadorDataTableContextMenu" listener="#{equipoJugadorController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":EquipoJugadorListForm:createButton :EquipoJugadorListForm:viewButton :EquipoJugadorListForm:editButton :EquipoJugadorListForm:deleteButton :EquipoJugadorListForm:EquipoJugadorDataTableContextMenu" listener="#{equipoJugadorController.resetParents}"/>
+                <p:ajax event="contextMenu" update=":EquipoJugadorListForm:createButton :EquipoJugadorListForm:viewButton :EquipoJugadorListForm:editButton :EquipoJugadorListForm:deleteButton" listener="#{equipoJugadorController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('EquipoJugadorListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idEquipoJugador}" filterBy="#{item.idEquipoJugador}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEquipoJugadorTitle_idEquipoJugador}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idEquipoJugador}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idequipo.idequipo}" filterBy="#{item.idequipo.idequipo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEquipoJugadorTitle_idequipo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idequipo.nombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idjugador.idjugador}" filterBy="#{item.idjugador.idjugador}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEquipoJugadorTitle_idjugador}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idjugador.nombre}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{equipoJugadorController.prepareCreate}" update=":EquipoJugadorCreateForm" oncomplete="PF('EquipoJugadorCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":EquipoJugadorViewForm" oncomplete="PF('EquipoJugadorViewDialog').show()" disabled="#{empty equipoJugadorController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":EquipoJugadorEditForm" oncomplete="PF('EquipoJugadorEditDialog').show()" disabled="#{empty equipoJugadorController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{equipoJugadorController.delete}" update=":growl,datalist" disabled="#{empty equipoJugadorController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

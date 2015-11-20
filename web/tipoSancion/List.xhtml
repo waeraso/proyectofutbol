@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="TipoSancionListForm">
+
+        <p:panel header="#{myBundle.ListTipoSancionTitle}">
+            <p:contextMenu id="TipoSancionDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('TipoSancionListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('TipoSancionListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('TipoSancionListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('TipoSancionListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.TipoSancionMenuItem_sancionCollection}" icon="ui-icon-search"  action="#{tipoSancionController.navigateSancionCollection}" disabled="#{empty tipoSancionController.selected.sancionCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{tipoSancionController.items}"
+                         var="item"
+                         rowKey="#{item.idtipoSancion}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{tipoSancionController.selected}">
+
+                <p:ajax event="rowSelect"   update=":TipoSancionListForm:createButton :TipoSancionListForm:viewButton :TipoSancionListForm:editButton :TipoSancionListForm:deleteButton :TipoSancionListForm:TipoSancionDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update=":TipoSancionListForm:createButton :TipoSancionListForm:viewButton :TipoSancionListForm:editButton :TipoSancionListForm:deleteButton :TipoSancionListForm:TipoSancionDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update=":TipoSancionListForm:createButton :TipoSancionListForm:viewButton :TipoSancionListForm:editButton :TipoSancionListForm:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('TipoSancionListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idtipoSancion}" filterBy="#{item.idtipoSancion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTipoSancionTitle_idtipoSancion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idtipoSancion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTipoSancionTitle_nombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombre}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{tipoSancionController.prepareCreate}" update=":TipoSancionCreateForm" oncomplete="PF('TipoSancionCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":TipoSancionViewForm" oncomplete="PF('TipoSancionViewDialog').show()" disabled="#{empty tipoSancionController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":TipoSancionEditForm" oncomplete="PF('TipoSancionEditDialog').show()" disabled="#{empty tipoSancionController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{tipoSancionController.delete}" update=":growl,datalist" disabled="#{empty tipoSancionController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

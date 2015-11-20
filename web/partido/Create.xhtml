@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PartidoCreateDlg" widgetVar="PartidoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreatePartidoTitle}" closeOnEscape="true">
+
+            <h:form id="PartidoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{partidoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreatePartidoLabel_fechaHora}" for="fechaHora" />
+                        <p:calendar id="fechaHora" pattern="MM/dd/yyyy HH:mm:ss" value="#{partidoController.selected.fechaHora}" title="#{myBundle.CreatePartidoTitle_fechaHora}" required="true" requiredMessage="#{myBundle.CreatePartidoRequiredMessage_fechaHora}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePartidoLabel_arbritroCentral}" for="arbritroCentral" />
+                        <p:selectOneMenu id="arbritroCentral" value="#{partidoController.selected.arbritroCentral}" required="true" requiredMessage="#{myBundle.CreatePartidoRequiredMessage_arbritroCentral}" converter="arbritroConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{arbritroController.items}"
+                                           var="arbritroCentralItem"
+                                           itemValue="#{arbritroCentralItem}"
+                                           itemLabel="#{arbritroCentralItem.nombre}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreatePartidoLabel_idarbritro1}" for="idarbritro1" />
+                        <p:selectOneMenu id="idarbritro1" value="#{partidoController.selected.idarbritro1}" required="true" requiredMessage="#{myBundle.CreatePartidoRequiredMessage_idarbritro1}" converter="arbritroConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{arbritroController.items}"
+                                           var="idarbritro1Item"
+                                           itemValue="#{idarbritro1Item}"
+                                           itemLabel="#{idarbritro1Item.nombre}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreatePartidoLabel_idarbritro2}" for="idarbritro2" />
+                        <p:selectOneMenu id="idarbritro2" value="#{partidoController.selected.idarbritro2}" required="true" requiredMessage="#{myBundle.CreatePartidoRequiredMessage_idarbritro2}" converter="arbritroConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{arbritroController.items}"
+                                           var="idarbritro2Item"
+                                           itemValue="#{idarbritro2Item}"
+                                           itemLabel="#{idarbritro2Item.nombre}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreatePartidoLabel_idarbritro3}" for="idarbritro3" />
+                        <p:selectOneMenu id="idarbritro3" value="#{partidoController.selected.idarbritro3}" required="true" requiredMessage="#{myBundle.CreatePartidoRequiredMessage_idarbritro3}" converter="arbritroConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{arbritroController.items}"
+                                           var="idarbritro3Item"
+                                           itemValue="#{idarbritro3Item}"
+                                           itemLabel="#{idarbritro3Item.nombre}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreatePartidoLabel_idcancha}" for="idcancha" />
+                        <p:selectOneMenu id="idcancha" value="#{partidoController.selected.idcancha}" required="true" requiredMessage="#{myBundle.CreatePartidoRequiredMessage_idcancha}" converter="canchaConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{canchaController.items}"
+                                           var="idcanchaItem"
+                                           itemValue="#{idcanchaItem}"
+                                           itemLabel="#{idcanchaItem.nombre}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreatePartidoLabel_equipoVisitante}" for="equipoVisitante" />
+                        <p:selectOneMenu id="equipoVisitante" value="#{partidoController.selected.equipoVisitante}" required="true" requiredMessage="#{myBundle.CreatePartidoRequiredMessage_equipoVisitante}" converter="equipoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{equipoController.items}"
+                                           var="equipoVisitanteItem"
+                                           itemValue="#{equipoVisitanteItem}"
+                                           itemLabel="#{equipoVisitanteItem.nombre}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreatePartidoLabel_equipoLocal}" for="equipoLocal" />
+                        <p:selectOneMenu id="equipoLocal" value="#{partidoController.selected.equipoLocal}" required="true" requiredMessage="#{myBundle.CreatePartidoRequiredMessage_equipoLocal}" converter="equipoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{equipoController.items}"
+                                           var="equipoLocalItem"
+                                           itemValue="#{equipoLocalItem}"
+                                           itemLabel="#{equipoLocalItem.nombre}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{partidoController.saveNew}" value="#{myBundle.Save}" update="display,:PartidoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PartidoCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('PartidoCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

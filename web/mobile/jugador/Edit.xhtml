@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="JugadorEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditJugadorTitle}">
+            <p:button styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" outcome="pm:JugadorListPage"/>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="JugadorEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{jugadorController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditJugadorLabel_idjugador}" for="idjugador" />
+                            <h:outputText id="idjugador" value="#{jugadorController.selected.idjugador}" />
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditJugadorLabel_nombre}" for="nombre" />
+                            <p:inputText id="nombre" value="#{jugadorController.selected.nombre}" title="#{myBundle.EditJugadorTitle_nombre}" required="true" requiredMessage="#{myBundle.EditJugadorRequiredMessage_nombre}" size="100" maxlength="100"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditJugadorLabel_apellido}" for="apellido" />
+                            <p:inputText id="apellido" value="#{jugadorController.selected.apellido}" title="#{myBundle.EditJugadorTitle_apellido}" required="true" requiredMessage="#{myBundle.EditJugadorRequiredMessage_apellido}" size="100" maxlength="100"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditJugadorLabel_fechaNacimiento}" for="fechaNacimiento" />
+                            <p:calendar id="fechaNacimiento" pattern="MM/dd/yyyy" value="#{jugadorController.selected.fechaNacimiento}" title="#{myBundle.EditJugadorTitle_fechaNacimiento}" required="true" requiredMessage="#{myBundle.EditJugadorRequiredMessage_fechaNacimiento}" showOn="button"/>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{jugadorController.save}" value="#{myBundle.Save}" update="display,:JugadorListPage:JugadorListForm:datalist,:growl" action="pm:JugadorListPage"/>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

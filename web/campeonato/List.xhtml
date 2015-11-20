@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="CampeonatoListForm">
+
+        <p:panel header="#{myBundle.ListCampeonatoTitle}">
+            <p:contextMenu id="CampeonatoDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('CampeonatoListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('CampeonatoListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('CampeonatoListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('CampeonatoListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.CampeonatoMenuItem_grupoCollection}" icon="ui-icon-search"  action="#{campeonatoController.navigateGrupoCollection}" disabled="#{empty campeonatoController.selected.grupoCollection}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CampeonatoMenuItem_tipoCampeonato}" icon="ui-icon-search"  actionListener="#{campeonatoController.prepareTipoCampeonato}" update=":TipoCampeonatoViewForm" oncomplete="PF('TipoCampeonatoViewDialog').show()" disabled="#{empty campeonatoController.selected.tipoCampeonato}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{campeonatoController.items}"
+                         var="item"
+                         rowKey="#{item.idcampeonato}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{campeonatoController.selected}">
+
+                <p:ajax event="rowSelect"   update=":CampeonatoListForm:createButton :CampeonatoListForm:viewButton :CampeonatoListForm:editButton :CampeonatoListForm:deleteButton :CampeonatoListForm:CampeonatoDataTableContextMenu" listener="#{campeonatoController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":CampeonatoListForm:createButton :CampeonatoListForm:viewButton :CampeonatoListForm:editButton :CampeonatoListForm:deleteButton :CampeonatoListForm:CampeonatoDataTableContextMenu" listener="#{campeonatoController.resetParents}"/>
+                <p:ajax event="contextMenu" update=":CampeonatoListForm:createButton :CampeonatoListForm:viewButton :CampeonatoListForm:editButton :CampeonatoListForm:deleteButton" listener="#{campeonatoController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('CampeonatoListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idcampeonato}" filterBy="#{item.idcampeonato}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCampeonatoTitle_idcampeonato}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idcampeonato}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCampeonatoTitle_descripcion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaInicio}" filterBy="#{item.fechaInicio}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCampeonatoTitle_fechaInicio}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaInicio}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaFin}" filterBy="#{item.fechaFin}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCampeonatoTitle_fechaFin}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaFin}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.tipoCampeonato.idtipoCampeonato}" filterBy="#{item.tipoCampeonato.idtipoCampeonato}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCampeonatoTitle_tipoCampeonato}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.tipoCampeonato.nombre}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{campeonatoController.prepareCreate}" update=":CampeonatoCreateForm" oncomplete="PF('CampeonatoCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":CampeonatoViewForm" oncomplete="PF('CampeonatoViewDialog').show()" disabled="#{empty campeonatoController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":CampeonatoEditForm" oncomplete="PF('CampeonatoEditDialog').show()" disabled="#{empty campeonatoController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{campeonatoController.delete}" update=":growl,datalist" disabled="#{empty campeonatoController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

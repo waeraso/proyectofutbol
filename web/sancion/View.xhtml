@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SancionViewDlg" widgetVar="SancionViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewSancionTitle}" closeOnEscape="true">
+
+            <h:form id="SancionViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{sancionController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewSancionLabel_idsancion}"/>
+                        <h:outputText value="#{sancionController.selected.idsancion}" title="#{myBundle.ViewSancionTitle_idsancion}"/>
+
+                        <h:outputText value="#{myBundle.ViewSancionLabel_idEquipoJugado}"/>
+                        <h:outputText value="#{sancionController.selected.idEquipoJugado.idEquipoJugador}"/>
+
+                        <h:outputText value="#{myBundle.ViewSancionLabel_idpartido}"/>
+                        <h:outputText value="#{sancionController.selected.idpartido.idpartido}"/>
+
+                        <h:outputText value="#{myBundle.ViewSancionLabel_tipoSancion}"/>
+                        <h:outputText value="#{sancionController.selected.tipoSancion.idtipoSancion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('SancionViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

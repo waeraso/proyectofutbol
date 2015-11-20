@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="JugadorCreateDlg" widgetVar="JugadorCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateJugadorTitle}" closeOnEscape="true">
+
+            <h:form id="JugadorCreateForm">
+
+                <h:panelGroup id="display" rendered="#{jugadorController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateJugadorLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{jugadorController.selected.nombre}" title="#{myBundle.CreateJugadorTitle_nombre}" required="true" requiredMessage="#{myBundle.CreateJugadorRequiredMessage_nombre}" size="100" maxlength="100"/>
+
+                        <p:outputLabel value="#{myBundle.CreateJugadorLabel_apellido}" for="apellido" />
+                        <p:inputText id="apellido" value="#{jugadorController.selected.apellido}" title="#{myBundle.CreateJugadorTitle_apellido}" required="true" requiredMessage="#{myBundle.CreateJugadorRequiredMessage_apellido}" size="100" maxlength="100"/>
+
+                        <p:outputLabel value="#{myBundle.CreateJugadorLabel_fechaNacimiento}" for="fechaNacimiento" />
+                        <p:calendar id="fechaNacimiento" pattern="MM/dd/yyyy" value="#{jugadorController.selected.fechaNacimiento}" title="#{myBundle.CreateJugadorTitle_fechaNacimiento}" required="true" requiredMessage="#{myBundle.CreateJugadorRequiredMessage_fechaNacimiento}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{jugadorController.saveNew}" value="#{myBundle.Save}" update="display,:JugadorListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('JugadorCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('JugadorCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

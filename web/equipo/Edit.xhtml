@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="EquipoEditDlg" widgetVar="EquipoEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditEquipoTitle}" closeOnEscape="true">
+
+            <h:form id="EquipoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{equipoController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditEquipoLabel_idequipo}" for="idequipo" />
+                        <h:outputText id="idequipo" value="#{equipoController.selected.idequipo}" />
+
+                        <p:outputLabel value="#{myBundle.EditEquipoLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{equipoController.selected.nombre}" title="#{myBundle.EditEquipoTitle_nombre}" required="true" requiredMessage="#{myBundle.EditEquipoRequiredMessage_nombre}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundle.EditEquipoLabel_idgrupo}" for="idgrupo" />
+                        <p:selectOneMenu id="idgrupo" value="#{equipoController.selected.idgrupo}" required="true" requiredMessage="#{myBundle.EditEquipoRequiredMessage_idgrupo}" converter="grupoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{grupoController.items}"
+                                           var="idgrupoItem"
+                                           itemValue="#{idgrupoItem}"
+                                           itemLabel="#{idgrupoItem.idgrupo.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{equipoController.save}" value="#{myBundle.Save}" update="display,:EquipoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('EquipoEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('EquipoEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

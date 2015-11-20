@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="CanchaEditDlg" widgetVar="CanchaEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditCanchaTitle}" closeOnEscape="true">
+
+            <h:form id="CanchaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{canchaController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditCanchaLabel_idcancha}" for="idcancha" />
+                        <h:outputText id="idcancha" value="#{canchaController.selected.idcancha}" />
+
+                        <p:outputLabel value="#{myBundle.EditCanchaLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{canchaController.selected.nombre}" title="#{myBundle.EditCanchaTitle_nombre}" required="true" requiredMessage="#{myBundle.EditCanchaRequiredMessage_nombre}" size="100" maxlength="100"/>
+
+                        <p:outputLabel value="#{myBundle.EditCanchaLabel_direccion}" for="direccion" />
+                        <p:inputText id="direccion" value="#{canchaController.selected.direccion}" title="#{myBundle.EditCanchaTitle_direccion}" required="true" requiredMessage="#{myBundle.EditCanchaRequiredMessage_direccion}" size="100" maxlength="100"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{canchaController.save}" value="#{myBundle.Save}" update="display,:CanchaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CanchaEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('CanchaEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

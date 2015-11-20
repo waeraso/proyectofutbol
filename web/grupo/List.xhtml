@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="GrupoListForm">
+
+        <p:panel header="#{myBundle.ListGrupoTitle}">
+            <p:contextMenu id="GrupoDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('GrupoListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('GrupoListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('GrupoListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('GrupoListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.GrupoMenuItem_equipoCollection}" icon="ui-icon-search"  action="#{grupoController.navigateEquipoCollection}" disabled="#{empty grupoController.selected.equipoCollection}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.GrupoMenuItem_idcampeonato}" icon="ui-icon-search"  actionListener="#{grupoController.prepareIdcampeonato}" update=":CampeonatoViewForm" oncomplete="PF('CampeonatoViewDialog').show()" disabled="#{empty grupoController.selected.idcampeonato}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{grupoController.items}"
+                         var="item"
+                         rowKey="#{item.idgrupo}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{grupoController.selected}">
+
+                <p:ajax event="rowSelect"   update=":GrupoListForm:createButton :GrupoListForm:viewButton :GrupoListForm:editButton :GrupoListForm:deleteButton :GrupoListForm:GrupoDataTableContextMenu" listener="#{grupoController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":GrupoListForm:createButton :GrupoListForm:viewButton :GrupoListForm:editButton :GrupoListForm:deleteButton :GrupoListForm:GrupoDataTableContextMenu" listener="#{grupoController.resetParents}"/>
+                <p:ajax event="contextMenu" update=":GrupoListForm:createButton :GrupoListForm:viewButton :GrupoListForm:editButton :GrupoListForm:deleteButton" listener="#{grupoController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('GrupoListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idgrupo}" filterBy="#{item.idgrupo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListGrupoTitle_idgrupo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idgrupo}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListGrupoTitle_nombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idcampeonato.descripcion}" filterBy="#{item.idcampeonato.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListGrupoTitle_idcampeonato}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idcampeonato.descripcion}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{grupoController.prepareCreate}" update=":GrupoCreateForm" oncomplete="PF('GrupoCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":GrupoViewForm" oncomplete="PF('GrupoViewDialog').show()" disabled="#{empty grupoController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":GrupoEditForm" oncomplete="PF('GrupoEditDialog').show()" disabled="#{empty grupoController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{grupoController.delete}" update=":growl,datalist" disabled="#{empty grupoController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

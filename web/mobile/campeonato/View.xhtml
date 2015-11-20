@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="CampeonatoViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewCampeonatoTitle}">
+            <p:button styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" outcome="pm:CampeonatoListPage"/>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="CampeonatoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{campeonatoController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewCampeonatoLabel_idcampeonato}"/>
+                            <h:outputText value="#{campeonatoController.selected.idcampeonato}" title="#{myBundle.ViewCampeonatoTitle_idcampeonato}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewCampeonatoLabel_descripcion}"/>
+                            <h:outputText value="#{campeonatoController.selected.descripcion}" title="#{myBundle.ViewCampeonatoTitle_descripcion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewCampeonatoLabel_fechaInicio}"/>
+                            <h:outputText value="#{campeonatoController.selected.fechaInicio}" title="#{myBundle.ViewCampeonatoTitle_fechaInicio}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewCampeonatoLabel_fechaFin}"/>
+                            <h:outputText value="#{campeonatoController.selected.fechaFin}" title="#{myBundle.ViewCampeonatoTitle_fechaFin}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewCampeonatoLabel_tipoCampeonato}"/>
+                            <h:outputText value="#{campeonatoController.selected.tipoCampeonato.idtipoCampeonato}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

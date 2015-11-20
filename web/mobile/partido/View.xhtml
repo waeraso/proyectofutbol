@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="PartidoViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewPartidoTitle}">
+            <p:button styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" outcome="pm:PartidoListPage"/>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="PartidoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{partidoController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPartidoLabel_idpartido}"/>
+                            <h:outputText value="#{partidoController.selected.idpartido}" title="#{myBundle.ViewPartidoTitle_idpartido}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPartidoLabel_fechaHora}"/>
+                            <h:outputText value="#{partidoController.selected.fechaHora}" title="#{myBundle.ViewPartidoTitle_fechaHora}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPartidoLabel_arbritroCentral}"/>
+                            <h:outputText value="#{partidoController.selected.arbritroCentral.idarbritro}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPartidoLabel_idarbritro1}"/>
+                            <h:outputText value="#{partidoController.selected.idarbritro1.idarbritro}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPartidoLabel_idarbritro2}"/>
+                            <h:outputText value="#{partidoController.selected.idarbritro2.idarbritro}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPartidoLabel_idarbritro3}"/>
+                            <h:outputText value="#{partidoController.selected.idarbritro3.idarbritro}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPartidoLabel_idcancha}"/>
+                            <h:outputText value="#{partidoController.selected.idcancha.idcancha}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPartidoLabel_equipoVisitante}"/>
+                            <h:outputText value="#{partidoController.selected.equipoVisitante.idequipo}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPartidoLabel_equipoLocal}"/>
+                            <h:outputText value="#{partidoController.selected.equipoLocal.idequipo}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

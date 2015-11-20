@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="PartidoListPage">
+        <pm:header title="#{myBundle.ListPartidoTitle}">
+            <h:form>
+                <p:button styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Menu}" icon="ui-icon-arrow-l" outcome="/mobile/index"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus" value="#{myBundle.Create}" actionListener="#{partidoController.prepareCreate}" update=":PartidoCreatePage:PartidoCreateForm" action="pm:PartidoCreatePage"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="PartidoListForm">
+
+                <p:dataList id="datalist"
+                            paginator="true"
+                            rows="10"
+                            rowsPerPageTemplate="10,20,30,40,50"
+                            pt:data-inset="true"
+                            value="#{partidoController.items}"
+                            var="item">
+
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPartidoTitle}"/>
+                    </f:facet>
+
+                    <p:commandLink update=":PartidoEditPage:PartidoEditForm" action="pm:PartidoEditPage">
+                        <p>
+
+
+
+                            <h:outputText value="#{item.idpartido}"/>
+
+
+
+                            ,&nbsp;
+                            <h:outputText value="#{item.fechaHora}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            </h:outputText>
+
+
+
+
+
+                            ,&nbsp;
+                            <h:outputText value="#{item.arbritroCentral.idarbritro}"/>
+
+
+
+                            ,&nbsp;
+                            <h:outputText value="#{item.idarbritro1.idarbritro}"/>
+
+
+
+                            ,&nbsp;
+                            <h:outputText value="#{item.idarbritro2.idarbritro}"/>
+
+
+
+                            ,&nbsp;
+                            <h:outputText value="#{item.idarbritro3.idarbritro}"/>
+
+
+                            <!--
+                                ,&nbsp;
+                                                    <h:outputText value="#{item.idcancha.idcancha}"/>
+                            -->
+
+                            <!--
+                                ,&nbsp;
+                                                    <h:outputText value="#{item.equipoVisitante.idequipo}"/>
+                            -->
+
+                            <!--
+                                ,&nbsp;
+                                                    <h:outputText value="#{item.equipoLocal.idequipo}"/>
+                            -->
+                        </p>
+                        <f:setPropertyActionListener value="#{item}" target="#{partidoController.selected}" />
+                    </p:commandLink>
+
+                    <f:facet name="footer">
+                        <h:outputText value="#{myBundle.ListPartidoTitle}"/>
+                    </f:facet>
+
+                </p:dataList>
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

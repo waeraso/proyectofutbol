@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EquipoViewDlg" widgetVar="EquipoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewEquipoTitle}" closeOnEscape="true">
+
+            <h:form id="EquipoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{equipoController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewEquipoLabel_idequipo}"/>
+                        <h:outputText value="#{equipoController.selected.idequipo}" title="#{myBundle.ViewEquipoTitle_idequipo}"/>
+
+                        <h:outputText value="#{myBundle.ViewEquipoLabel_nombre}"/>
+                        <h:outputText value="#{equipoController.selected.nombre}" title="#{myBundle.ViewEquipoTitle_nombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewEquipoLabel_idgrupo}"/>
+                        <h:outputText value="#{equipoController.selected.idgrupo.idgrupo}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('EquipoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

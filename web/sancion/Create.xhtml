@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SancionCreateDlg" widgetVar="SancionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateSancionTitle}" closeOnEscape="true">
+
+            <h:form id="SancionCreateForm">
+
+                <h:panelGroup id="display" rendered="#{sancionController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateSancionLabel_idEquipoJugado}" for="idEquipoJugado" />
+                        <p:selectOneMenu id="idEquipoJugado" value="#{sancionController.selected.idEquipoJugado}" required="true" requiredMessage="#{myBundle.CreateSancionRequiredMessage_idEquipoJugado}" converter="equipoJugadorConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{equipoJugadorController.items}"
+                                           var="idEquipoJugadoItem"
+                                           itemValue="#{idEquipoJugadoItem}"
+                                           itemLabel="#{idEquipoJugadoItem.idEquipoJugador.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateSancionLabel_idpartido}" for="idpartido" />
+                        <p:selectOneMenu id="idpartido" value="#{sancionController.selected.idpartido}" required="true" requiredMessage="#{myBundle.CreateSancionRequiredMessage_idpartido}" converter="partidoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{partidoController.items}"
+                                           var="idpartidoItem"
+                                           itemValue="#{partidoItem}"
+                                           itemLabel="#{partidoItem.nombre}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateSancionLabel_tipoSancion}" for="tipoSancion" />
+                        <p:selectOneMenu id="tipoSancion" value="#{sancionController.selected.tipoSancion}" required="true" requiredMessage="#{myBundle.CreateSancionRequiredMessage_tipoSancion}" converter="tipoSancionConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoSancionController.items}"
+                                           var="tipoSancionItem"
+                                           itemValue="#{tipoSancionItem}"
+                                           itemLabel="#{tipoSancionItem.idtipoSancion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{sancionController.saveNew}" value="#{myBundle.Save}" update="display,:SancionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('SancionCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('SancionCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

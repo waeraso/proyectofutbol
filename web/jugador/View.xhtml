@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="JugadorViewDlg" widgetVar="JugadorViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewJugadorTitle}" closeOnEscape="true">
+
+            <h:form id="JugadorViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{jugadorController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewJugadorLabel_idjugador}"/>
+                        <h:outputText value="#{jugadorController.selected.idjugador}" title="#{myBundle.ViewJugadorTitle_idjugador}"/>
+
+                        <h:outputText value="#{myBundle.ViewJugadorLabel_nombre}"/>
+                        <h:outputText value="#{jugadorController.selected.nombre}" title="#{myBundle.ViewJugadorTitle_nombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewJugadorLabel_apellido}"/>
+                        <h:outputText value="#{jugadorController.selected.apellido}" title="#{myBundle.ViewJugadorTitle_apellido}"/>
+
+                        <h:outputText value="#{myBundle.ViewJugadorLabel_fechaNacimiento}"/>
+                        <h:outputText value="#{jugadorController.selected.fechaNacimiento}" title="#{myBundle.ViewJugadorTitle_fechaNacimiento}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('JugadorViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

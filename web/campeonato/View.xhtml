@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CampeonatoViewDlg" widgetVar="CampeonatoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewCampeonatoTitle}" closeOnEscape="true">
+
+            <h:form id="CampeonatoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{campeonatoController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewCampeonatoLabel_idcampeonato}"/>
+                        <h:outputText value="#{campeonatoController.selected.idcampeonato}" title="#{myBundle.ViewCampeonatoTitle_idcampeonato}"/>
+
+                        <h:outputText value="#{myBundle.ViewCampeonatoLabel_descripcion}"/>
+                        <h:outputText value="#{campeonatoController.selected.descripcion}" title="#{myBundle.ViewCampeonatoTitle_descripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewCampeonatoLabel_fechaInicio}"/>
+                        <h:outputText value="#{campeonatoController.selected.fechaInicio}" title="#{myBundle.ViewCampeonatoTitle_fechaInicio}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewCampeonatoLabel_fechaFin}"/>
+                        <h:outputText value="#{campeonatoController.selected.fechaFin}" title="#{myBundle.ViewCampeonatoTitle_fechaFin}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewCampeonatoLabel_tipoCampeonato}"/>
+                        <h:outputText value="#{campeonatoController.selected.tipoCampeonato.idtipoCampeonato}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('CampeonatoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

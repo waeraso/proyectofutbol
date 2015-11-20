@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ArbritroEditDlg" widgetVar="ArbritroEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditArbritroTitle}" closeOnEscape="true">
+
+            <h:form id="ArbritroEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{arbritroController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditArbritroLabel_idarbritro}" for="idarbritro" />
+                        <h:outputText id="idarbritro" value="#{arbritroController.selected.idarbritro}" />
+
+                        <p:outputLabel value="#{myBundle.EditArbritroLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{arbritroController.selected.nombre}" title="#{myBundle.EditArbritroTitle_nombre}" required="true" requiredMessage="#{myBundle.EditArbritroRequiredMessage_nombre}" size="100" maxlength="100"/>
+
+                        <p:outputLabel value="#{myBundle.EditArbritroLabel_apellido}" for="apellido" />
+                        <p:inputText id="apellido" value="#{arbritroController.selected.apellido}" title="#{myBundle.EditArbritroTitle_apellido}" required="true" requiredMessage="#{myBundle.EditArbritroRequiredMessage_apellido}" size="100" maxlength="100"/>
+
+                        <p:outputLabel value="#{myBundle.EditArbritroLabel_fechaNacimiento}" for="fechaNacimiento" />
+                        <p:calendar id="fechaNacimiento" pattern="MM/dd/yyyy" value="#{arbritroController.selected.fechaNacimiento}" title="#{myBundle.EditArbritroTitle_fechaNacimiento}" required="true" requiredMessage="#{myBundle.EditArbritroRequiredMessage_fechaNacimiento}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{arbritroController.save}" value="#{myBundle.Save}" update="display,:ArbritroListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ArbritroEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('ArbritroEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="GrupoCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateGrupoTitle}">
+            <p:button styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" outcome="pm:GrupoListPage"/>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="GrupoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{grupoController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateGrupoLabel_nombre}" for="nombre" />
+                            <p:inputText id="nombre" value="#{grupoController.selected.nombre}" title="#{myBundle.CreateGrupoTitle_nombre}" required="true" requiredMessage="#{myBundle.CreateGrupoRequiredMessage_nombre}" size="100" maxlength="100"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateGrupoLabel_idcampeonato}" for="idcampeonato" />
+                            <p:selectOneMenu id="idcampeonato" value="#{grupoController.selected.idcampeonato}" required="true" requiredMessage="#{myBundle.CreateGrupoRequiredMessage_idcampeonato}" converter="campeonatoConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{campeonatoController.items}"
+                                               var="idcampeonatoItem"
+                                               itemValue="#{idcampeonatoItem}"
+                                               itemLabel="#{idcampeonatoItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{grupoController.saveNew}" value="#{myBundle.Save}" update="display,:GrupoListPage:GrupoListForm:datalist,:growl" action="pm:GrupoListPage"/>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

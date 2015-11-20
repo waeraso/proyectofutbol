@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TipoSancionEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditTipoSancionTitle}">
+            <p:button styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" outcome="pm:TipoSancionListPage"/>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TipoSancionEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{tipoSancionController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditTipoSancionLabel_idtipoSancion}" for="idtipoSancion" />
+                            <h:outputText id="idtipoSancion" value="#{tipoSancionController.selected.idtipoSancion}" />
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditTipoSancionLabel_nombre}" for="nombre" />
+                            <p:inputText id="nombre" value="#{tipoSancionController.selected.nombre}" title="#{myBundle.EditTipoSancionTitle_nombre}" required="true" requiredMessage="#{myBundle.EditTipoSancionRequiredMessage_nombre}" size="100" maxlength="100"/>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{tipoSancionController.save}" value="#{myBundle.Save}" update="display,:TipoSancionListPage:TipoSancionListForm:datalist,:growl" action="pm:TipoSancionListPage"/>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

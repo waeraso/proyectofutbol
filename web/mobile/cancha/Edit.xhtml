@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="CanchaEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditCanchaTitle}">
+            <p:button styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" outcome="pm:CanchaListPage"/>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="CanchaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{canchaController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditCanchaLabel_idcancha}" for="idcancha" />
+                            <h:outputText id="idcancha" value="#{canchaController.selected.idcancha}" />
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditCanchaLabel_nombre}" for="nombre" />
+                            <p:inputText id="nombre" value="#{canchaController.selected.nombre}" title="#{myBundle.EditCanchaTitle_nombre}" required="true" requiredMessage="#{myBundle.EditCanchaRequiredMessage_nombre}" size="100" maxlength="100"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditCanchaLabel_direccion}" for="direccion" />
+                            <p:inputText id="direccion" value="#{canchaController.selected.direccion}" title="#{myBundle.EditCanchaTitle_direccion}" required="true" requiredMessage="#{myBundle.EditCanchaRequiredMessage_direccion}" size="100" maxlength="100"/>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{canchaController.save}" value="#{myBundle.Save}" update="display,:CanchaListPage:CanchaListForm:datalist,:growl" action="pm:CanchaListPage"/>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

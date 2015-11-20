@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ArbritroViewDlg" widgetVar="ArbritroViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewArbritroTitle}" closeOnEscape="true">
+
+            <h:form id="ArbritroViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{arbritroController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewArbritroLabel_idarbritro}"/>
+                        <h:outputText value="#{arbritroController.selected.idarbritro}" title="#{myBundle.ViewArbritroTitle_idarbritro}"/>
+
+                        <h:outputText value="#{myBundle.ViewArbritroLabel_nombre}"/>
+                        <h:outputText value="#{arbritroController.selected.nombre}" title="#{myBundle.ViewArbritroTitle_nombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewArbritroLabel_apellido}"/>
+                        <h:outputText value="#{arbritroController.selected.apellido}" title="#{myBundle.ViewArbritroTitle_apellido}"/>
+
+                        <h:outputText value="#{myBundle.ViewArbritroLabel_fechaNacimiento}"/>
+                        <h:outputText value="#{arbritroController.selected.fechaNacimiento}" title="#{myBundle.ViewArbritroTitle_fechaNacimiento}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('ArbritroViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

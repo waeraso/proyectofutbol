@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="CampeonatoCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateCampeonatoTitle}">
+            <p:button styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" outcome="pm:CampeonatoListPage"/>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="CampeonatoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{campeonatoController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateCampeonatoLabel_descripcion}" for="descripcion" />
+                            <p:inputText id="descripcion" value="#{campeonatoController.selected.descripcion}" title="#{myBundle.CreateCampeonatoTitle_descripcion}" required="true" requiredMessage="#{myBundle.CreateCampeonatoRequiredMessage_descripcion}" size="100" maxlength="100"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateCampeonatoLabel_fechaInicio}" for="fechaInicio" />
+                            <p:calendar id="fechaInicio" pattern="MM/dd/yyyy" value="#{campeonatoController.selected.fechaInicio}" title="#{myBundle.CreateCampeonatoTitle_fechaInicio}" required="true" requiredMessage="#{myBundle.CreateCampeonatoRequiredMessage_fechaInicio}" showOn="button"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateCampeonatoLabel_fechaFin}" for="fechaFin" />
+                            <p:calendar id="fechaFin" pattern="MM/dd/yyyy" value="#{campeonatoController.selected.fechaFin}" title="#{myBundle.CreateCampeonatoTitle_fechaFin}" required="true" requiredMessage="#{myBundle.CreateCampeonatoRequiredMessage_fechaFin}" showOn="button"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateCampeonatoLabel_tipoCampeonato}" for="tipoCampeonato" />
+                            <p:selectOneMenu id="tipoCampeonato" value="#{campeonatoController.selected.tipoCampeonato}" required="true" requiredMessage="#{myBundle.CreateCampeonatoRequiredMessage_tipoCampeonato}" converter="tipoCampeonatoConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{tipoCampeonatoController.items}"
+                                               var="tipoCampeonatoItem"
+                                               itemValue="#{tipoCampeonatoItem}"
+                                               itemLabel="#{tipoCampeonatoItem.idtipoCampeonato.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{campeonatoController.saveNew}" value="#{myBundle.Save}" update="display,:CampeonatoListPage:CampeonatoListForm:datalist,:growl" action="pm:CampeonatoListPage"/>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

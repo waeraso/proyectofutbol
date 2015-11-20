@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="GrupoViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewGrupoTitle}">
+            <p:button styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" outcome="pm:GrupoListPage"/>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="GrupoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{grupoController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGrupoLabel_idgrupo}"/>
+                            <h:outputText value="#{grupoController.selected.idgrupo}" title="#{myBundle.ViewGrupoTitle_idgrupo}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGrupoLabel_nombre}"/>
+                            <h:outputText value="#{grupoController.selected.nombre}" title="#{myBundle.ViewGrupoTitle_nombre}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGrupoLabel_idcampeonato}"/>
+                            <h:outputText value="#{grupoController.selected.idcampeonato.descripcion}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

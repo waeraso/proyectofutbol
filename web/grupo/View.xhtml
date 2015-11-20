@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="GrupoViewDlg" widgetVar="GrupoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewGrupoTitle}" closeOnEscape="true">
+
+            <h:form id="GrupoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{grupoController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewGrupoLabel_idgrupo}"/>
+                        <h:outputText value="#{grupoController.selected.idgrupo}" title="#{myBundle.ViewGrupoTitle_idgrupo}"/>
+
+                        <h:outputText value="#{myBundle.ViewGrupoLabel_nombre}"/>
+                        <h:outputText value="#{grupoController.selected.nombre}" title="#{myBundle.ViewGrupoTitle_nombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewGrupoLabel_idcampeonato}"/>
+                        <h:outputText value="#{grupoController.selected.idcampeonato.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('GrupoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

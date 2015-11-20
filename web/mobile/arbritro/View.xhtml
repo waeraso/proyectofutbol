@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="ArbritroViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewArbritroTitle}">
+            <p:button styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" outcome="pm:ArbritroListPage"/>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="ArbritroViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{arbritroController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewArbritroLabel_idarbritro}"/>
+                            <h:outputText value="#{arbritroController.selected.idarbritro}" title="#{myBundle.ViewArbritroTitle_idarbritro}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewArbritroLabel_nombre}"/>
+                            <h:outputText value="#{arbritroController.selected.nombre}" title="#{myBundle.ViewArbritroTitle_nombre}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewArbritroLabel_apellido}"/>
+                            <h:outputText value="#{arbritroController.selected.apellido}" title="#{myBundle.ViewArbritroTitle_apellido}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewArbritroLabel_fechaNacimiento}"/>
+                            <h:outputText value="#{arbritroController.selected.fechaNacimiento}" title="#{myBundle.ViewArbritroTitle_fechaNacimiento}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

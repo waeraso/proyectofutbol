@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ArbritroListForm">
+
+        <p:panel header="#{myBundle.ListArbritroTitle}">
+            <p:contextMenu id="ArbritroDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('ArbritroListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('ArbritroListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('ArbritroListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('ArbritroListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.ArbritroMenuItem_partidoCollection}" icon="ui-icon-search"  action="#{arbritroController.navigatePartidoCollection}" disabled="#{empty arbritroController.selected.partidoCollection}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.ArbritroMenuItem_partidoCollection1}" icon="ui-icon-search"  action="#{arbritroController.navigatePartidoCollection1}" disabled="#{empty arbritroController.selected.partidoCollection1}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.ArbritroMenuItem_partidoCollection2}" icon="ui-icon-search"  action="#{arbritroController.navigatePartidoCollection2}" disabled="#{empty arbritroController.selected.partidoCollection2}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.ArbritroMenuItem_partidoCollection3}" icon="ui-icon-search"  action="#{arbritroController.navigatePartidoCollection3}" disabled="#{empty arbritroController.selected.partidoCollection3}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{arbritroController.items}"
+                         var="item"
+                         rowKey="#{item.idarbritro}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{arbritroController.selected}">
+
+                <p:ajax event="rowSelect"   update=":ArbritroListForm:createButton :ArbritroListForm:viewButton :ArbritroListForm:editButton :ArbritroListForm:deleteButton :ArbritroListForm:ArbritroDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update=":ArbritroListForm:createButton :ArbritroListForm:viewButton :ArbritroListForm:editButton :ArbritroListForm:deleteButton :ArbritroListForm:ArbritroDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update=":ArbritroListForm:createButton :ArbritroListForm:viewButton :ArbritroListForm:editButton :ArbritroListForm:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ArbritroListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idarbritro}" filterBy="#{item.idarbritro}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListArbritroTitle_idarbritro}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idarbritro}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListArbritroTitle_nombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.apellido}" filterBy="#{item.apellido}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListArbritroTitle_apellido}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.apellido}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaNacimiento}" filterBy="#{item.fechaNacimiento}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListArbritroTitle_fechaNacimiento}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaNacimiento}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{arbritroController.prepareCreate}" update=":ArbritroCreateForm" oncomplete="PF('ArbritroCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":ArbritroViewForm" oncomplete="PF('ArbritroViewDialog').show()" disabled="#{empty arbritroController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":ArbritroEditForm" oncomplete="PF('ArbritroEditDialog').show()" disabled="#{empty arbritroController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{arbritroController.delete}" update=":growl,datalist" disabled="#{empty arbritroController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

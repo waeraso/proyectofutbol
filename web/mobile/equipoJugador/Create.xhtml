@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="EquipoJugadorCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateEquipoJugadorTitle}">
+            <p:button styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" outcome="pm:EquipoJugadorListPage"/>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="EquipoJugadorCreateForm">
+
+                <h:panelGroup id="display" rendered="#{equipoJugadorController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEquipoJugadorLabel_idequipo}" for="idequipo" />
+                            <p:selectOneMenu id="idequipo" value="#{equipoJugadorController.selected.idequipo}" required="true" requiredMessage="#{myBundle.CreateEquipoJugadorRequiredMessage_idequipo}" converter="equipoConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{equipoController.items}"
+                                               var="idequipoItem"
+                                               itemValue="#{idequipoItem}"
+                                               itemLabel="#{idequipoItem.idequipo.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEquipoJugadorLabel_idjugador}" for="idjugador" />
+                            <p:selectOneMenu id="idjugador" value="#{equipoJugadorController.selected.idjugador}" required="true" requiredMessage="#{myBundle.CreateEquipoJugadorRequiredMessage_idjugador}" converter="jugadorConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{jugadorController.items}"
+                                               var="idjugadorItem"
+                                               itemValue="#{idjugadorItem}"
+                                               itemLabel="#{idjugadorItem.idjugador.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{equipoJugadorController.saveNew}" value="#{myBundle.Save}" update="display,:EquipoJugadorListPage:EquipoJugadorListForm:datalist,:growl" action="pm:EquipoJugadorListPage"/>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>
