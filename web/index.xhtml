@@ -1,51 +1,56 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Pagina Principal</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
 
-    <ui:composition template="/template.xhtml">
-
-        <h:form>
-
-            <p:growl id="messages" showDetail="true"/>
-
-
-        </h:form>
-
-        <ui:define name="blitzer">
-            <h:outputText value="#{myBundle.AppName}"></h:outputText>
-        </ui:define>
-        <ui:define name="body">
-            <p:panel header="#{myBundle.Welcome}">
-                <p><h:outputText value="#{myBundle.WelcomeMessage}"></h:outputText></p>
-            </p:panel>
+        <script type="text/javascript">
+            function handleLoginRequest(xhr, status, args) {
+                if (args.validationFailed || !args.loggedIn) {
+                    PF('dlg').jq.effect("shake", {times: 5}, 100);
+                }
+                else {
+                    PF('dlg').hide();
+                    $('#loginLink').fadeOut();
+                }
+            }
+        </script>
+    </h:head>
+    <h:body>    
+        <h:form id="formIndex">            
+            <p:growl id="msgIndex" sticky="true"/>
             
             
-            <p:growl id="msgs" showDetail="true" />
-            <p:fieldset legend="Historia del Futbol" toggleable="true" toggleSpeed="500">
-        <p:ajax event="toggle" listener="#{fieldsetView.handleToggle}" update="msgs" />
-        <h:panelGrid columns="2" cellpadding="5">
-            <p:graphicImage value="/resources/images/nature/img1.jpg" width="200" height="200" />
-            <h:outputText value="El fútbol o futbol (del inglés británico football), también conocido como balompié, es un deporte de equipo jugado entre dos conjuntos de once jugadores cada uno y algunos árbitros que se ocupan de que las normas se cumplan correctamente. Es ampliamente considerado el deporte más popular del mundo, pues lo practican unos 270 millones de personas.3
+            <p:confirmDialog message="Inicie  sesión para acceder al sistema" header="Login" widgetVar="dlg" visible="true" closable="false" showEffect="fade" hideEffect="explode"  >
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="usuario" value="Usuario" />
+                    <p:inputText id="usuario" value="#{usuarioController.usuario}" required="true" label="Usuario" 
+                                 validatorMessage="Campo usuario: no se permiten caracteres especiales" autocomplete="off">
+                        <f:validateRegex pattern="^[a-zA-Z[0-9]]+$" />
+                    </p:inputText>
 
-El terreno de juego es rectangular de césped natural o artificial, con una portería o arco a cada lado del campo. Se juega mediante una pelota que se debe desplazar a través del campo con cualquier parte del cuerpo que no sean los brazos o las manos, y mayoritariamente con los pies (de ahí su nombre). El objetivo es introducirla dentro del arco contrario, acción que se denomina marcar un gol. El equipo que logre más goles al cabo del partido, de una duración de 90 minutos, es el que resulta ganador del encuentro."></h:outputText>
-        </h:panelGrid>
-    </p:fieldset>
-            <p:panel>
-                <p:contentFlow value="#{imagesView.images}" var="image">
-                    <p:graphicImage value="/resources/images/nature/#{image}" styleClass="content" />
+                    <h:outputLabel for="contraseña" value="Contraseña: " />
+                    <p:password id="contraseña" value="#{usuarioController.contrasenia}" required="true" label="Contraseña" />
+                    <f:facet name="footer">
+                        <p:commandButton ajax="false" action="#{usuarioController.login()}" value="iniciar Sesion" update="msgIndex"/>
+                    </f:facet> 
+                </h:panelGrid>
+                
+                <p:separator/>                 
+                <p:link outcome="resgistroUsuario" value="Registrate">               
+                </p:link>
+            </p:confirmDialog>           
+        </h:form>                              
+    </h:body>
 
-                    <div class="caption">#{image}</div>
-                </p:contentFlow>
-            </p:panel>
-
-        </ui:define>
 
 
-    </ui:composition>
+
 
 
 </html>

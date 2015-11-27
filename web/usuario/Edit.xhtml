@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="UsuarioEditDlg" widgetVar="UsuarioEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundleU.EditUsuarioTitle}" closeOnEscape="true">
+
+            <h:form id="UsuarioEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{usuarioController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundleU.EditUsuarioLabel_idusuario}" for="idusuario" />
+                        <h:outputText id="idusuario" value="#{usuarioController.selected.idusuario}" />
+
+                        <p:outputLabel value="#{myBundleU.EditUsuarioLabel_username}" for="username" />
+                        <p:inputText id="username" value="#{usuarioController.selected.username}" title="#{myBundleU.EditUsuarioTitle_username}" required="true" requiredMessage="#{myBundleU.EditUsuarioRequiredMessage_username}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundleU.EditUsuarioLabel_password}" for="password" />
+                        <p:inputText id="password" value="#{usuarioController.selected.password}" title="#{myBundleU.EditUsuarioTitle_password}" required="true" requiredMessage="#{myBundleU.EditUsuarioRequiredMessage_password}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundleU.EditUsuarioLabel_rol}" for="rol" />
+                        <p:inputText id="rol" value="#{usuarioController.selected.rol}" title="#{myBundleU.EditUsuarioTitle_rol}" required="true" requiredMessage="#{myBundleU.EditUsuarioRequiredMessage_rol}" size="1" maxlength="1"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{usuarioController.save}" value="#{myBundleU.Save}" update="display,:UsuarioListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('UsuarioEditDialog'));">
+                        <p:confirm header="#{myBundleU.ConfirmationHeader}" message="#{myBundleU.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundleU.Cancel}" onclick="PF('UsuarioEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

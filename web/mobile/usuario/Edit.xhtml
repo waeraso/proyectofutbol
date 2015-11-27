@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="UsuarioEditPage" lazy="true">
+        <pm:header title="#{myBundleU.EditUsuarioTitle}">
+            <p:button styleClass="ui-btn-left ui-btn-inline" value="#{myBundleU.Cancel}" icon="ui-icon-arrow-l" outcome="pm:UsuarioListPage"/>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="UsuarioEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{usuarioController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundleU.EditUsuarioLabel_idusuario}" for="idusuario" />
+                            <h:outputText id="idusuario" value="#{usuarioController.selected.idusuario}" />
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundleU.EditUsuarioLabel_username}" for="username" />
+                            <p:inputText id="username" value="#{usuarioController.selected.username}" title="#{myBundleU.EditUsuarioTitle_username}" required="true" requiredMessage="#{myBundleU.EditUsuarioRequiredMessage_username}" size="50" maxlength="50"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundleU.EditUsuarioLabel_password}" for="password" />
+                            <p:inputText id="password" value="#{usuarioController.selected.password}" title="#{myBundleU.EditUsuarioTitle_password}" required="true" requiredMessage="#{myBundleU.EditUsuarioRequiredMessage_password}" size="50" maxlength="50"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundleU.EditUsuarioLabel_rol}" for="rol" />
+                            <p:inputText id="rol" value="#{usuarioController.selected.rol}" title="#{myBundleU.EditUsuarioTitle_rol}" required="true" requiredMessage="#{myBundleU.EditUsuarioRequiredMessage_rol}" size="1" maxlength="1"/>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{usuarioController.save}" value="#{myBundleU.Save}" update="display,:UsuarioListPage:UsuarioListForm:datalist,:growl" action="pm:UsuarioListPage"/>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

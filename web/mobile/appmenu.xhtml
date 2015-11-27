@@ -9,21 +9,10 @@
 
     <h:form id="menuForm">
         <p:menu>
-            <p:submenu label="#{myBundle.Maintenance}">
-                <p:menuitem value="#{myBundle.ArbritroHeading}..." outcome="/mobile/arbritro/index" />
-                <p:menuitem value="#{myBundle.CampeonatoHeading}..." outcome="/mobile/campeonato/index" />
-                <p:menuitem value="#{myBundle.CanchaHeading}..." outcome="/mobile/cancha/index" />
-                <p:menuitem value="#{myBundle.EquipoHeading}..." outcome="/mobile/equipo/index" />
-                <p:menuitem value="#{myBundle.EquipoJugadorHeading}..." outcome="/mobile/equipoJugador/index" />
-                <p:menuitem value="#{myBundle.GolHeading}..." outcome="/mobile/gol/index" />
-                <p:menuitem value="#{myBundle.GrupoHeading}..." outcome="/mobile/grupo/index" />
-                <p:menuitem value="#{myBundle.JugadorHeading}..." outcome="/mobile/jugador/index" />
-                <p:menuitem value="#{myBundle.PartidoHeading}..." outcome="/mobile/partido/index" />
-                <p:menuitem value="#{myBundle.SancionHeading}..." outcome="/mobile/sancion/index" />
-                <p:menuitem value="#{myBundle.TipoCampeonatoHeading}..." outcome="/mobile/tipoCampeonato/index" />
-                <p:menuitem value="#{myBundle.TipoSancionHeading}..." outcome="/mobile/tipoSancion/index" />
+            <p:submenu label="#{myBundleU.Maintenance}">
+                <p:menuitem value="#{myBundleU.UsuarioHeading}..." outcome="/mobile/usuario/index" />
             </p:submenu>
-            <p:menuitem value="#{myBundle.FullApp}" outcome="/index" icon="ui-icon-home"/>
+            <p:menuitem value="#{myBundleU.FullApp}" outcome="/index" icon="ui-icon-home"/>
         </p:menu>
     </h:form>
 </ui:composition>

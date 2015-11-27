@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="UsuarioListForm">
+
+        <p:panel header="#{myBundleU.ListUsuarioTitle}">
+            <p:contextMenu id="UsuarioDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundleU.Create}" onclick="document.getElementById('UsuarioListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundleU.View}" onclick="document.getElementById('UsuarioListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundleU.Edit}" onclick="document.getElementById('UsuarioListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundleU.Delete}" onclick="document.getElementById('UsuarioListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{usuarioController.items}"
+                         var="item"
+                         rowKey="#{item.idusuario}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{usuarioController.selected}">
+
+                <p:ajax event="rowSelect"   update=":UsuarioListForm:createButton :UsuarioListForm:viewButton :UsuarioListForm:editButton :UsuarioListForm:deleteButton :UsuarioListForm:UsuarioDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update=":UsuarioListForm:createButton :UsuarioListForm:viewButton :UsuarioListForm:editButton :UsuarioListForm:deleteButton :UsuarioListForm:UsuarioDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update=":UsuarioListForm:createButton :UsuarioListForm:viewButton :UsuarioListForm:editButton :UsuarioListForm:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('UsuarioListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idusuario}" filterBy="#{item.idusuario}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundleU.ListUsuarioTitle_idusuario}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idusuario}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.username}" filterBy="#{item.username}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundleU.ListUsuarioTitle_username}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.username}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.password}" filterBy="#{item.password}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundleU.ListUsuarioTitle_password}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.password}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.rol}" filterBy="#{item.rol}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundleU.ListUsuarioTitle_rol}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.rol}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundleU.Create}" actionListener="#{usuarioController.prepareCreate}" update=":UsuarioCreateForm" oncomplete="PF('UsuarioCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundleU.View}" update=":UsuarioViewForm" oncomplete="PF('UsuarioViewDialog').show()" disabled="#{empty usuarioController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundleU.Edit}" update=":UsuarioEditForm" oncomplete="PF('UsuarioEditDialog').show()" disabled="#{empty usuarioController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundleU.Delete}" actionListener="#{usuarioController.delete}" update=":growl,datalist" disabled="#{empty usuarioController.selected}">
+                <p:confirm header="#{myBundleU.ConfirmationHeader}" message="#{myBundleU.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+        <ui:include src="timer.xhtml"/>            
+    </h:form>
+
+</ui:composition>

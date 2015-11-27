@@ -12,58 +12,58 @@
     </h:head>
 
     <h:body>
-       
-        
-       
+
+
+
         <p:growl id="growl" life="3000"/>
 
         <p:layout fullPage="true">
             <p:layoutUnit position="north" size="70" header="#{myBundle.AppName}">
                 <!-- Menu here. Also a layout and a way to log a user out -->
-                
+
                 <ui:include src="/appmenu.xhtml"/>
-             
-               
+
+
             </p:layoutUnit>
 
             <p:layoutUnit position="south" size="60">
-               
+
                 <ui:insert name="footer"/>
             </p:layoutUnit>
 
             <p:layoutUnit position="center">
                 <p:panel style="height:250px; position:relative;" >
-                <p:carousel numVisible="1" effect="easeInStrong" headerText="CURIOSIDADES DEL FUTBOL" style="margin-bottom:0">
-                    <p:tab title="SABIAS QUE...?">
-                        <h:panelGrid columns="2" cellpadding="20">
-                            <p:graphicImage value="/resources/images/nature/img2.jpg" height="150" width="150" />
-                            <h:outputText
-                                value="SABIAS QUE..? el Origen de los Mundiales nació el 21 de mayo de 1904 en París, en la fundación de la Federación Internacional de Fútbol Asociado (FIFA)"
-                                />
-                        </h:panelGrid>
-                    </p:tab>
-                    <p:tab title="Godfather Part II">
-                        <h:panelGrid columns="2" cellpadding="20">
-                            <p:graphicImage value="/resources/images/nature/img3.jpg" height="150" width="150" />
-                            <h:outputText value="La UEFA(Unión de Asociaciones de Fútbol Europeas)es la precursora de la copa.Se decide organizar por primera vez el torneo,con la idea de repetirlo cada año." />
-                        </h:panelGrid>
-                    </p:tab>
-                    <p:tab title="Godfather Part III">
-                        <h:panelGrid columns="2" cellpadding="10">
-                            <p:graphicImage value="/resources/images/nature/img4.jpg" height="150" width="150" />
-                            <h:outputText value="Los hermanos Boateng: Dos hermanos, dos Selecciones (Kevin Prince y Jerome) jugadores de Ghana y Alemania" />
-                        </h:panelGrid>
-                    </p:tab>
-                </p:carousel>
+                    <p:carousel numVisible="1" effect="easeInStrong" headerText="CURIOSIDADES DEL FUTBOL" style="margin-bottom:0">
+                        <p:tab title="SABIAS QUE...?">
+                            <h:panelGrid columns="2" cellpadding="20">
+                                <p:graphicImage value="/resources/images/nature/img2.jpg" height="150" width="150" />
+                                <h:outputText
+                                    value="SABIAS QUE..? el Origen de los Mundiales nació el 21 de mayo de 1904 en París, en la fundación de la Federación Internacional de Fútbol Asociado (FIFA)"
+                                    />
+                            </h:panelGrid>
+                        </p:tab>
+                        <p:tab title="Godfather Part II">
+                            <h:panelGrid columns="2" cellpadding="20">
+                                <p:graphicImage value="/resources/images/nature/img3.jpg" height="150" width="150" />
+                                <h:outputText value="La UEFA(Unión de Asociaciones de Fútbol Europeas)es la precursora de la copa.Se decide organizar por primera vez el torneo,con la idea de repetirlo cada año." />
+                            </h:panelGrid>
+                        </p:tab>
+                        <p:tab title="Godfather Part III">
+                            <h:panelGrid columns="2" cellpadding="10">
+                                <p:graphicImage value="/resources/images/nature/img4.jpg" height="150" width="150" />
+                                <h:outputText value="Los hermanos Boateng: Dos hermanos, dos Selecciones (Kevin Prince y Jerome) jugadores de Ghana y Alemania" />
+                            </h:panelGrid>
+                        </p:tab>
+                    </p:carousel>
 
-            </p:panel>
+                </p:panel>
                 <ui:insert name="body"/>
-                 
+
             </p:layoutUnit>
-             
+
 
         </p:layout>
-         
+
 
     </h:body>
 
